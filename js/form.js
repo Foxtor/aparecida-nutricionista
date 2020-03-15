@@ -9,12 +9,24 @@ adicionarPaciente.addEventListener("click", function(event) {
     tabela = document.querySelector("#tabela-pacientes")
 
     paciente = novoPaciente(form);
-    
-    var createTr = criaTr(paciente);
+
+    erros = validaPaciente(paciente);
+    console.log(erros);
+
+    if(!erros.length > 0) {
+        var createTr = criaTr(paciente);
+
+    } else {
+        exibeMensagensErro(erros);
+        return; 
+    }
 
     tabela.appendChild(createTr);
-
+    
     form.reset();
+
+    var mensagemErros = document.querySelector("#mensagem-erro");
+    mensagemErros.innerHTML="";
 });
 
 function novoPaciente (form) {
@@ -35,8 +47,8 @@ function criaTr (paciente) {
     pacienteTr.classList.add("paciente");
 
     pacienteTr.appendChild(criaTd(paciente.nome, "info-nome"));
-    pacienteTr.appendChild(criaTd(paciente.altura, "info-altura"));
     pacienteTr.appendChild(criaTd(paciente.peso, "info-peso"));
+    pacienteTr.appendChild(criaTd(paciente.altura, "info-altura"));
     pacienteTr.appendChild(criaTd(paciente.gordura, "info-gordura"));
     pacienteTr.appendChild(criaTd(paciente.imc, "info-imc"));
 
@@ -49,4 +61,27 @@ function criaTd(dado, classe) {
     newTd.classList.add(classe);
 
     return newTd;
+}
+
+function validaPaciente(paciente) {
+
+    var erros = []
+
+    if(paciente.nome.length == 0) erros.push("O campo nome não pode estar vazio");
+    if(!validaPeso(paciente.peso)) erros.push("O Peso é inválido.");
+    if(!validaAltura(paciente.altura)) erros.push("A altura é inválida.");
+    if(paciente.gordura.length == 0) erros.push("O campo gordura não pode estar vazio");
+
+    return erros;
+}
+
+function exibeMensagensErro(erros) {
+
+    var ul = document.querySelector("#mensagem-erro");
+    ul.innerHTML = "";
+    erros.forEach(erro => {
+        var li = document.createElement("li");
+        li.textContent = erro;
+        ul.appendChild(li);
+    });
 }
