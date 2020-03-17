@@ -6,23 +6,20 @@ adicionarPaciente.addEventListener("click", function(event) {
 
     //Pega as informações do formulario.
     form = document.querySelector("#adiciona-pacientes")
-    tabela = document.querySelector("#tabela-pacientes")
 
     paciente = novoPaciente(form);
 
     erros = validaPaciente(paciente);
     console.log(erros);
 
-    if(!erros.length > 0) {
-        var createTr = criaTr(paciente);
-
-    } else {
+    if(erros.length > 0) {      
         exibeMensagensErro(erros);
-        return; 
+        return;  
+
     }
 
-    tabela.appendChild(createTr);
-    
+    adicionaPacienteTabela(paciente);
+
     form.reset();
 
     var mensagemErros = document.querySelector("#mensagem-erro");
@@ -75,8 +72,15 @@ function validaPaciente(paciente) {
     return erros;
 }
 
-function exibeMensagensErro(erros) {
+function adicionaPacienteTabela(paciente) {
+    var createTr = criaTr(paciente);
+    tabela = document.querySelector("#tabela-pacientes");
+    tabela.appendChild(createTr);
 
+}
+
+function exibeMensagensErro(erros) {
+    
     var ul = document.querySelector("#mensagem-erro");
     ul.innerHTML = "";
     erros.forEach(erro => {

@@ -142,3 +142,24 @@ button[disabled=disabled], button:disabled {
 	font-size: 1em;
 	color: red;
 }
+
+#mensagem-removido {
+	font-size: 1em;
+	color: red;
+}
+
+.fadeOut {
+	opacity: 0;
+	transition: 0.5s;
+}
+
+#filtrar-tabela {
+	width: 100%;
+	height: 2.5em;
+	margin-bottom: 1em;
+	padding-left: .5em;
+}
+
+.invisivel {
+	display: none;
+}
